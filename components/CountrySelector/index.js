@@ -4,9 +4,12 @@ import SwapVertIcon from "@material-ui/icons/SwapVert";
 import styles from "./country-selector.module.scss";
 import { swapSelectedCountries, updateCountryFrom, updateCountryTo } from "../../store/actions";
 import Image from "next/image";
+import { useTheme } from "@material-ui/core/styles";
+
 const findCountryByCountryCode = (countries, code) => countries.find((country) => country.code === code);
 
 const CountrySelector = ({ countries, from, to, dispatch }) => {
+  const theme = useTheme();
   const [rotate, setRotate] = useState(0);
   const [blink, setBlink] = useState(0);
 
@@ -64,7 +67,12 @@ const CountrySelector = ({ countries, from, to, dispatch }) => {
         <div className={styles.swapIconContainer}>
           <div className={styles.swapButton}>
             <IconButton onClick={swapSelectedOptions}>
-              <SwapVertIcon onAnimationEnd={handleSwapAnimationEnd} rotate={rotate} className={styles.icon} />
+              <SwapVertIcon
+                onAnimationEnd={handleSwapAnimationEnd}
+                rotate={rotate}
+                className={styles.icon}
+                style={{ color: theme.palette.primary.main }}
+              />
             </IconButton>
           </div>
         </div>
