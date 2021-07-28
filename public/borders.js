@@ -1,5 +1,5 @@
 export const borders = [
-  { id: "hu-rs", name: "Röszke 1 - Horgos 1", openingHours: "7-24" },
+  { id: "hu-rs", name: "Röszke 1 - Horgos 1", openingHours: "0-24" },
   { id: "hu-rs", name: "Röszke 2 - Horgos 2", openingHours: "7-19" },
   { id: "hu-rs", name: "Hercegszántó - Backi Breg", openingHours: "0-24" },
   { id: "hu-rs", name: "Tompa- Kelebija", openingHours: "0-24" },
