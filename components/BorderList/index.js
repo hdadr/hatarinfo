@@ -1,5 +1,6 @@
 import { Box, Divider, List, ListItem } from "@material-ui/core";
 import React from "react";
+import { setSelectedBorder } from "../../store/actions";
 
 const borderClosed = (openingHours) => {
   const currentHour = new Date().getHours();
@@ -8,13 +9,18 @@ const borderClosed = (openingHours) => {
   return currentHour < open || currentHour > close ? true : false;
 };
 
-const BorderList = ({ borders = [] }) => {
+const BorderList = ({ borders = [], openBorderInformation, dispatch }) => {
+  const handleBorderListItemClick = (border) => {
+    dispatch(setSelectedBorder(border));
+    openBorderInformation();
+  };
+
   return (
     <List aria-label="borders">
       {borders.map((border) => {
         return (
           <React.Fragment key={border.name}>
-            <ListItem disabled={borderClosed(border.openingHours)} button>
+            <ListItem disabled={borderClosed(border.openingHours)} onClick={() => handleBorderListItemClick(border)} button>
               <div>
                 <div>{border.name}</div>
                 <Box color="text.secondary">{border.openingHours}</Box>

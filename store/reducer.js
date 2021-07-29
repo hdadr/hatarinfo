@@ -1,4 +1,4 @@
-import { SWAP_SELECTED_COUNTRIES, UPDATE_COUNTRY_FROM, UPDATE_COUNTRY_TO } from "./actions";
+import { SET_SELECTED_BORDER, SWAP_SELECTED_COUNTRIES, UPDATE_COUNTRY_FROM, UPDATE_COUNTRY_TO } from "./actions";
 
 export const reducer = (state, action) => {
   switch (action.type) {
@@ -14,6 +14,8 @@ export const reducer = (state, action) => {
       return { ...state, selectedCountries: { ...state.selectedCountries, to: action.payload } };
     case SWAP_SELECTED_COUNTRIES:
       return { ...state, selectedCountries: { from: state.selectedCountries.to, to: state.selectedCountries.from } };
+    case SET_SELECTED_BORDER:
+      return { ...state, selectedBorder: action.payload };
     default:
       return state;
   }
