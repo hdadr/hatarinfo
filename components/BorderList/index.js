@@ -6,7 +6,7 @@ const borderClosed = (openingHours) => {
   const currentHour = new Date().getHours();
   const [open, close] = openingHours.split("-");
 
-  return currentHour < open || currentHour > close ? true : false;
+  return currentHour < open || currentHour >= close ? true : false;
 };
 
 const BorderList = ({ borders = [], openBorderInformation, dispatch }) => {
