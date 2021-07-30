@@ -5,10 +5,13 @@ import styles from "./country-selector.module.scss";
 import { swapSelectedCountries, updateCountryFrom, updateCountryTo } from "../../store/actions";
 import Image from "next/image";
 import { useTheme } from "@material-ui/core/styles";
+import { useDispatch } from "react-redux";
 
 const findCountryByCountryCode = (countries, code) => countries.find((country) => country.code === code);
 
-const CountrySelector = ({ countries, from, to, dispatch }) => {
+const CountrySelector = ({ countries, from, to }) => {
+  const dispatch = useDispatch();
+
   const theme = useTheme();
   const [rotate, setRotate] = useState(0);
   const [blink, setBlink] = useState(0);

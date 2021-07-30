@@ -1,5 +1,6 @@
 import { Box, Divider, List, ListItem } from "@material-ui/core";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { setSelectedBorder } from "../../store/actions";
 
 const borderClosed = (openingHours) => {
@@ -9,7 +10,9 @@ const borderClosed = (openingHours) => {
   return currentHour < open || currentHour >= close ? true : false;
 };
 
-const BorderList = ({ borders = [], openBorderInformation, dispatch }) => {
+const BorderList = ({ borders = [], openBorderInformation }) => {
+  const dispatch = useDispatch();
+
   const handleBorderListItemClick = (border) => {
     dispatch(setSelectedBorder(border));
     openBorderInformation();
