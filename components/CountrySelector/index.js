@@ -2,7 +2,7 @@ import { IconButton, MenuItem, Select } from "@material-ui/core";
 import { useState } from "react";
 import SwapVertIcon from "@material-ui/icons/SwapVert";
 import styles from "./country-selector.module.scss";
-import { swapSelectedCountries, updateCountryFrom, updateCountryTo } from "../../store/actions";
+import { swapSelectedCountries, updateCountryFrom, updateCountryTo } from "../../store/countries/actions";
 import Image from "next/image";
 import { useTheme } from "@material-ui/core/styles";
 import { useDispatch } from "react-redux";

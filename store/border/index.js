@@ -1,4 +1,4 @@
-import { SET_SELECTED_BORDER } from "../actions";
+import { SET_SELECTED_BORDER } from "./actions";
 
 export const selectedBorder = (state = null, action) => {
   switch (action.type) {

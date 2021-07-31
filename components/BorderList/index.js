@@ -1,7 +1,7 @@
 import { Box, Divider, List, ListItem } from "@material-ui/core";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { setSelectedBorder } from "../../store/actions";
+import { setSelectedBorder } from "../../store/border/actions";
 
 const borderClosed = (openingHours) => {
   const currentHour = new Date().getHours();

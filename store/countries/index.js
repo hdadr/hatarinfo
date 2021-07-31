@@ -1,4 +1,4 @@
-import { SWAP_SELECTED_COUNTRIES, UPDATE_COUNTRY_FROM, UPDATE_COUNTRY_TO } from "../actions";
+import { SWAP_SELECTED_COUNTRIES, UPDATE_COUNTRY_FROM, UPDATE_COUNTRY_TO } from "./actions";
 
 const supportedCountries = [
   {
