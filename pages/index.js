@@ -11,17 +11,10 @@ import SlideUpTransition from "../components/SlideUpTransition";
 export default function Home() {
   const state = useSelector((state) => state);
   const { selectedCountries, selectedBorder } = state;
-  const borderId = `${selectedCountries.from.code}-${selectedCountries.to.code}`;
-  const filteredBorders = borders.filter((border) => border.id === borderId);
+  const countryBorderDirection = `${selectedCountries.from.code}-${selectedCountries.to.code}`;
+  const filteredBorders = borders.filter((border) => border.id.includes(countryBorderDirection));
 
   const [openBorderInformation, setOpenBorderInformation] = useState(false);
-
-  const handleBorderClick = () => {
-    setOpenBorderInformation(true);
-  };
-  const handleCloseBorderInformation = () => {
-    setOpenBorderInformation(false);
-  };
 
   return (
     <>
@@ -36,13 +29,13 @@ export default function Home() {
         <h3>Válasz határt</h3>
         <Paper elevation={1}>
           <div className={styles.borderListContainer}>
-            <BorderList borders={filteredBorders} openBorderInformation={handleBorderClick} />
+            <BorderList borders={filteredBorders} openBorderInformation={() => setOpenBorderInformation(true)} />
           </div>
         </Paper>
       </div>
 
       <Dialog fullScreen open={openBorderInformation} TransitionComponent={SlideUpTransition}>
-        <BorderInformation border={selectedBorder} close={handleCloseBorderInformation} />
+        <BorderInformation border={selectedBorder} close={() => setOpenBorderInformation(false)} />
       </Dialog>
     </>
   );
