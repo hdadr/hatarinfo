@@ -3,12 +3,16 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import styles from "./border-info-message.module.scss";
 
-const formatDatetime = (date) => date.getHours() + ":" + date.getMinutes().toString().padStart(2, "0");
+const formatDatetime = (datetime) => {
+  const date = new Date(datetime);
+  return date.getHours() + ":" + date.getMinutes().toString().padStart(2, "0");
+};
 
-const formatWaitingTime = (waitningTime) => {
-  const [hours, minutes] = waitningTime.split(":");
+const formatWaitingTime = (waitingTime) => {
+  const [hours, minutes] = waitingTime.split(":");
   return hours === "0" ? `${minutes} perc` : `${hours} óra ${minutes} perc`;
 };
+
 const BorderInfoEntry = ({ info }) => {
   return (
     <div className={styles.container}>
