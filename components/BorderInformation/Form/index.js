@@ -1,20 +1,47 @@
 import { Button } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addNewInfo } from "../../../store/infos/actions";
+import { selectDeviceID, selectInfoLoading } from "../../../store/selectors";
 import styles from "./border-information-form.module.scss";
 
-const Form = ({ closeDialog }) => {
-  const [waitingTime, setWaitingTime] = useState("00:30");
-  const [waitingTimeError, setWaitingTimeError] = useState(false);
+const Form = ({ closeDialog, borderID }) => {
   const [comment, setComment] = useState("");
+  const [waitingTime, setWaitingTime] = useState("00:30");
+  const deviceID = useSelector(selectDeviceID);
 
+  const [waitingTimeError, setWaitingTimeError] = useState(false);
   const handleWaitingTimeErrorState = () => {
     return waitingTime ? setWaitingTimeError(false) : setWaitingTimeError(true);
   };
 
+  const [submitted, setSubmitted] = useState("");
+  const loading = useSelector(selectInfoLoading);
+  useEffect(() => {
+    submitted & !loading ? closeDialog() : null;
+  }, [submitted, loading, closeDialog]);
+
+  const dispatch = useDispatch();
   const handeSubmit = (event) => {
     event.preventDefault();
-    console.log({ waitingTime }, { comment });
+
+    setSubmitted(true);
+    dispatch(
+      addNewInfo({
+        borderID,
+        data: {
+          deviceID,
+          waitingTime,
+          comment,
+          datetime: Date.now(),
+          report: {
+            counts: 0,
+            reporters: [],
+          },
+        },
+      })
+    );
   };
 
   return (
@@ -50,7 +77,7 @@ const Form = ({ closeDialog }) => {
           Mégse
         </Button>
 
-        <Button type="submit" variant="contained" color="primary">
+        <Button disabled={loading} type="submit" variant="contained" color="primary">
           Küldés
         </Button>
       </div>

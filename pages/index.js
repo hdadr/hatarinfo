@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { useSelector } from "react-redux";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import CountrySelector from "../components/CountrySelector";
 import styles from "../styles/home.module.scss";
 import BorderList from "../components/BorderList";
@@ -7,6 +7,9 @@ import { borders } from "../public/borders";
 import { Dialog, Paper } from "@material-ui/core";
 import BorderInformation from "../components/BorderInformation";
 import SlideUpTransition from "../components/SlideUpTransition";
+import { useLocalStorage } from "../hooks/useLocalStorage";
+import { nanoid } from "nanoid";
+import { setDeviceID } from "../store/device/actions";
 
 export default function Home() {
   const state = useSelector((state) => state);
@@ -15,6 +18,12 @@ export default function Home() {
   const filteredBorders = borders.filter((border) => border.id.includes(countryBorderDirection));
 
   const [openBorderInformation, setOpenBorderInformation] = useState(false);
+
+  const [deviceID] = useLocalStorage("deviceID", nanoid());
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(setDeviceID(deviceID));
+  }, [dispatch, deviceID]);
 
   return (
     <>
