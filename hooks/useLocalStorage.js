@@ -4,7 +4,7 @@ export const useLocalStorage = (key, initialValue) => {
   const initialize = (key) => {
     try {
       const item = localStorage.getItem(key);
-      if (item) {
+      if (item && item !== "undefined") {
         return JSON.parse(item);
       }
 
