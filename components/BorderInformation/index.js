@@ -48,7 +48,7 @@ const BorderInformation = ({ close, border, infos = [] }) => {
       </div>
 
       <Dialog open={openAddInfo} onClose={handleCloseDialog}>
-        <Form closeDialog={handleCloseDialog} />
+        <Form closeDialog={handleCloseDialog} borderID={border?.id} />
       </Dialog>
     </div>
   );
