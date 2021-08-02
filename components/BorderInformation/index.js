@@ -3,19 +3,27 @@ import styles from "./border-info.module.scss";
 import BorderDescription from "./BorderDescription";
 import BorderInfoEntry from "./BorderInfoEntry";
 import BorderInfoHeaderBar from "./BorderInfoHeaderBar";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Form from "./Form";
+import { useDispatch, useSelector } from "react-redux";
+import { loadInformations } from "../../store/infos/actions";
+import { selectBorderInformationEntires } from "../../store/selectors";
 
-const BorderInformation = ({ close, border, infos = [] }) => {
-  if (border === null) {
-    close();
-  }
+const sortByDatetimeDesc = (i1, i2) => i2.datetime - i1.datetime;
 
+const BorderInformation = ({ close, border }) => {
+  const dispatch = useDispatch();
+  const infoEntries = useSelector(selectBorderInformationEntires);
   const [openAddInfo, setOpenAddInfo] = useState(false);
+
   const handleCloseDialog = () => {
     setOpenAddInfo(false);
   };
+
+  useEffect(() => {
+    dispatch(loadInformations({ borderID: border?.id }));
+  }, [dispatch, border]);
 
   return (
     <div className={styles.container}>
@@ -26,8 +34,8 @@ const BorderInformation = ({ close, border, infos = [] }) => {
 
       <Paper elevation={1}>
         <div className={styles.infoContainer}>
-          {infos.length ? (
-            infos.map((info, index) => {
+          {infoEntries.length ? (
+            infoEntries.sort(sortByDatetimeDesc).map((info, index) => {
               return (
                 <React.Fragment key={info.datetime + index}>
                   <BorderInfoEntry info={info} />

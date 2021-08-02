@@ -5,10 +5,10 @@ import { countries, selectedCountries } from "./countries";
 import { selectedBorder } from "./border";
 import { infos } from "./infos";
 import { device } from "./device";
-import { addNewInfoEpic } from "./infos/epics";
+import { addNewInfoEpic, loadInfosEpic } from "./infos/epics";
 
 const rootReducer = combineReducers({ countries, selectedCountries, selectedBorder, device, infos });
-const rootEpic = combineEpics(addNewInfoEpic);
+const rootEpic = combineEpics(addNewInfoEpic, loadInfosEpic);
 
 const epicMiddleware = createEpicMiddleware();
 export const store = createStore(rootReducer, applyMiddleware(epicMiddleware));

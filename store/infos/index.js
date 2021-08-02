@@ -1,7 +1,6 @@
-import { ADD_NEW_INFO, ADD_NEW_INFO_FULLFILED } from "./actions";
+import { ADD_NEW_INFO, ADD_NEW_INFO_FULLFILED, LOAD_INFORMATIONS, LOAD_INFORMATIONS_FULLFILLD } from "./actions";
 
 const initialState = {
-  borderID: null,
   entries: [],
   loading: false,
 };
@@ -12,7 +11,13 @@ export const infos = (state = initialState, action) => {
       return { ...state, loading: true };
 
     case ADD_NEW_INFO_FULLFILED:
-      return { ...state, entries: [...state.entries, action.payload], loading: false };
+      return { entries: [...state.entries, action.payload], loading: false };
+
+    case LOAD_INFORMATIONS:
+      return { ...state, loading: true };
+
+    case LOAD_INFORMATIONS_FULLFILLD:
+      return { entries: [...action.payload], loading: false };
 
     default:
       return state;
