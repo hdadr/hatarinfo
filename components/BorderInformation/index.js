@@ -7,7 +7,7 @@ import React, { useEffect, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Form from "./Form";
 import { useDispatch, useSelector } from "react-redux";
-import { loadInformations } from "../../store/infos/actions";
+import { loadInformations, unsetInformation } from "../../store/infos/actions";
 import { selectBorderInformationEntires } from "../../store/selectors";
 
 const sortByDatetimeDesc = (i1, i2) => i2.datetime - i1.datetime;
@@ -22,6 +22,7 @@ const BorderInformation = ({ close, border }) => {
   };
 
   useEffect(() => {
+    dispatch(unsetInformation());
     dispatch(loadInformations({ borderID: border?.id }));
   }, [dispatch, border]);
 

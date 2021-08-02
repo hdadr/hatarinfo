@@ -1,4 +1,4 @@
-import { ADD_NEW_INFO, ADD_NEW_INFO_FULLFILED, LOAD_INFORMATIONS, LOAD_INFORMATIONS_FULLFILLD } from "./actions";
+import { ADD_NEW_INFO, ADD_NEW_INFO_FULLFILED, LOAD_INFORMATIONS, LOAD_INFORMATIONS_FULLFILLD, UNSET_INFORMATIONS } from "./actions";
 
 const initialState = {
   entries: [],
@@ -18,6 +18,10 @@ export const infos = (state = initialState, action) => {
 
     case LOAD_INFORMATIONS_FULLFILLD:
       return { entries: [...action.payload], loading: false };
+
+    case UNSET_INFORMATIONS: {
+      return { ...state, entries: [] };
+    }
 
     default:
       return state;
