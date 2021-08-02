@@ -1,4 +1,4 @@
-import { Box } from "@material-ui/core";
+import { Box, useTheme } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import styles from "./border-info-message.module.scss";
@@ -14,8 +14,23 @@ const formatWaitingTime = (waitingTime) => {
 };
 
 const BorderInfoEntry = ({ info }) => {
+  const theme = useTheme();
+
+  const colorLeftBorderBasedOnWaitingTime = (waitingTime) => {
+    const [hours, minutes] = waitingTime.split(":");
+
+    let color = theme.palette.error.main;
+    if (hours === "00" && minutes <= "30") {
+      color = theme.palette.success.main;
+    } else if (hours === "01" && minutes <= "30") {
+      color = theme.palette.warning.main;
+    }
+
+    return { borderLeft: `3px solid ${color}` };
+  };
+
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={colorLeftBorderBasedOnWaitingTime(info.waitingTime)}>
       <div className={styles.avatar}>
         <AccountCircleIcon fontSize="large" color="disabled" />
       </div>
