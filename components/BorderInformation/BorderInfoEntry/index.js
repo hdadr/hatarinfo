@@ -18,11 +18,12 @@ const BorderInfoEntry = ({ info }) => {
 
   const colorLeftBorderBasedOnWaitingTime = (waitingTime) => {
     const [hours, minutes] = waitingTime.split(":");
+    const waitingTimeInMins = +hours * 60 + +minutes;
 
     let color = theme.palette.error.main;
-    if (hours === "00" && minutes <= "30") {
+    if (waitingTimeInMins <= 30) {
       color = theme.palette.success.main;
-    } else if (hours === "01" && minutes <= "30") {
+    } else if (waitingTimeInMins <= 90) {
       color = theme.palette.warning.main;
     }
 
