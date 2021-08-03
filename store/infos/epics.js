@@ -46,7 +46,7 @@ export const deleteInfoEpic = (action$) =>
   action$.pipe(
     ofType(DELETE_INFORMATION),
     switchMap((action) => {
-      return updateDocument(`borders/${action.payload.borderID}/infos`, action.payload.infoID, { status: "inActive" }).pipe(
+      return updateDocument(`borders/${action.payload.borderID}/infos`, action.payload.infoID, { status: "inactive" }).pipe(
         map(() => deleteInformationFullFilled(action.payload.infoID)),
         catchError((error) => {
           // TODO
