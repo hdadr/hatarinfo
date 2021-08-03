@@ -10,6 +10,7 @@ import SlideUpTransition from "../components/SlideUpTransition";
 import { useLocalStorage } from "../hooks/useLocalStorage";
 import { nanoid } from "nanoid";
 import { setDeviceID } from "../store/device/actions";
+import { unsetInformation } from "../store/infos/actions";
 
 export default function Home() {
   const state = useSelector((state) => state);
@@ -21,6 +22,12 @@ export default function Home() {
 
   const [deviceID] = useLocalStorage("deviceID", nanoid());
   const dispatch = useDispatch();
+
+  const handleCloseBorderInformation = () => {
+    dispatch(unsetInformation());
+    setOpenBorderInformation(false);
+  };
+
   useEffect(() => {
     dispatch(setDeviceID(deviceID));
   }, [dispatch, deviceID]);
@@ -44,7 +51,7 @@ export default function Home() {
       </div>
 
       <Dialog fullScreen open={openBorderInformation} TransitionComponent={SlideUpTransition}>
-        <BorderInformation border={selectedBorder} close={() => setOpenBorderInformation(false)} />
+        <BorderInformation border={selectedBorder} close={handleCloseBorderInformation} />
       </Dialog>
     </>
   );
