@@ -7,6 +7,8 @@ import {
   loadInformationsFullFilled,
   DELETE_INFORMATION,
   deleteInformationFullFilled,
+  REPORT_INFORMATION,
+  reportInformationFullFilled,
 } from "./actions";
 import { setDocument, getDocuments, updateDocument } from "../../utils/firestore";
 import { where } from "firebase/firestore";
@@ -48,6 +50,27 @@ export const deleteInfoEpic = (action$) =>
     switchMap((action) => {
       return updateDocument(`borders/${action.payload.borderID}/infos`, action.payload.infoID, { status: "inactive" }).pipe(
         map(() => deleteInformationFullFilled(action.payload.infoID)),
+        catchError((error) => {
+          // TODO
+        })
+      );
+    })
+  );
+
+export const reportInfoEpic = (action$) =>
+  action$.pipe(
+    ofType(REPORT_INFORMATION),
+    switchMap((action) => {
+      const updatedInfoFields = {
+        report: {
+          counts: action.payload.info.report.counts + 1,
+          reporters: [...action.payload.info.report.reporters, action.payload.deviceID],
+        },
+        status: action.payload.info.report.counts >= 3 ? "inactive" : "active",
+      };
+
+      return updateDocument(`borders/${action.payload.borderID}/infos`, action.payload.info.id, updatedInfoFields).pipe(
+        map(() => reportInformationFullFilled(action.payload.info.id)),
         catchError((error) => {
           // TODO
         })

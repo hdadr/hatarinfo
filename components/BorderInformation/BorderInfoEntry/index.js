@@ -3,7 +3,7 @@ import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteInformation } from "../../../store/infos/actions";
+import { deleteInformation, reportInformation } from "../../../store/infos/actions";
 import { selectDeviceID } from "../../../store/selectors";
 import styles from "./border-info-message.module.scss";
 
@@ -20,10 +20,10 @@ const formatWaitingTime = (waitingTime) => {
 const BorderInfoEntry = ({ info }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
-  const open = !!anchorEl;
-  const deviceID = useSelector(selectDeviceID);
-  const dispatch = useDispatch();
   const [growTransition, setGrowTransition] = useState(true);
+  const open = !!anchorEl;
+  const currentUserDeviceID = useSelector(selectDeviceID);
+  const dispatch = useDispatch();
 
   const colorLeftBorderBasedOnWaitingTime = (waitingTime) => {
     const [hours, minutes] = waitingTime.split(":");
@@ -66,12 +66,16 @@ const BorderInfoEntry = ({ info }) => {
               <MoreHorizIcon color="primary" />
             </IconButton>
             <Menu id="long-menu" anchorEl={anchorEl} keepMounted open={open} onClose={() => setAnchorEl(null)}>
-              {deviceID === info.deviceID ? (
+              {currentUserDeviceID === info.deviceID ? (
                 <MenuItem onClick={() => dispatch(deleteInformation({ borderID: info.borderID, infoID: info.id }))} selected>
                   Törlés
                 </MenuItem>
               ) : (
-                <MenuItem selected>Jelentés</MenuItem>
+                <MenuItem
+                  onClick={() => dispatch(reportInformation({ borderID: info.borderID, info: info, deviceID: currentUserDeviceID }))}
+                  selected>
+                  Jelentés
+                </MenuItem>
               )}
             </Menu>
           </div>

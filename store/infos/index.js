@@ -5,6 +5,8 @@ import {
   DELETE_INFORMATION_FULLFILLED,
   LOAD_INFORMATIONS,
   LOAD_INFORMATIONS_FULLFILLD,
+  REPORT_INFORMATION,
+  REPORT_INFORMATION_FULLFILLED,
   UNSET_INFORMATIONS,
 } from "./actions";
 
@@ -36,6 +38,14 @@ export const infos = (state = initialState, action) => {
     }
 
     case DELETE_INFORMATION_FULLFILLED: {
+      return { entries: state.entries.filter((entry) => entry.id !== action.payload), loading: false };
+    }
+
+    case REPORT_INFORMATION: {
+      return { ...state, loading: true };
+    }
+
+    case REPORT_INFORMATION_FULLFILLED: {
       return { entries: state.entries.filter((entry) => entry.id !== action.payload), loading: false };
     }
 
