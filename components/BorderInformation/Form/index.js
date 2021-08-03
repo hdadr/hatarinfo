@@ -39,6 +39,7 @@ const Form = ({ closeDialog, borderID }) => {
             counts: 0,
             reporters: [],
           },
+          status: "active",
         },
       })
     );

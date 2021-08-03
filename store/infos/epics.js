@@ -11,8 +11,6 @@ import {
 import { setDocument, getDocuments, updateDocument } from "../../utils/firestore";
 import { where } from "firebase/firestore";
 
-const sixHoursInMillisecs = 6 * 10 * 60 * 1000;
-
 export const addNewInfoEpic = (action$) =>
   action$.pipe(
     ofType(ADD_NEW_INFO),
@@ -26,13 +24,15 @@ export const addNewInfoEpic = (action$) =>
     )
   );
 
+const sixHoursInMillisecs = 6 * 10 * 60 * 1000;
 export const loadInfosEpic = (action$) =>
   action$.pipe(
     ofType(LOAD_INFORMATIONS),
     switchMap((action) => {
       const notOlderThanSixHours = where("datetime", ">=", Date.now() - sixHoursInMillisecs);
+      const onlyWithActiveStatus = where("status", "==", "active");
 
-      return getDocuments(`borders/${action.payload.borderID}/infos`, notOlderThanSixHours).pipe(
+      return getDocuments(`borders/${action.payload.borderID}/infos`, [notOlderThanSixHours, onlyWithActiveStatus]).pipe(
         map((snapshot) => snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.ref.id }))),
         map((entries) => loadInformationsFullFilled(entries)),
         catchError((error) => {

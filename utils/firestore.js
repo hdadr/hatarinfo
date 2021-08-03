@@ -1,5 +1,5 @@
-import { addDoc, collection, deleteDoc, doc, getDocs, getFirestore, query, updateDoc } from "firebase/firestore";
-import { from, Observable } from "rxjs";
+import { addDoc, collection, doc, getDocs, getFirestore, query, updateDoc } from "firebase/firestore";
+import { from } from "rxjs";
 
 export const setDocument = (collectionPath, data) => {
   const db = getFirestore();
@@ -10,7 +10,7 @@ export const getDocuments = (collectionPath, constraints) => {
   const db = getFirestore();
 
   const dbCollection = collection(db, collectionPath);
-  const q = constraints ? query(dbCollection, constraints) : dbCollection;
+  const q = constraints ? query(dbCollection, ...constraints) : dbCollection;
   return from(getDocs(q));
 };
 
