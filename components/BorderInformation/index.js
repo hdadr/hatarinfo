@@ -39,7 +39,7 @@ const BorderInformation = ({ close, border }) => {
             infoEntries.sort(sortByDatetimeDesc).map((info, index) => {
               return (
                 <React.Fragment key={info.datetime + index}>
-                  <BorderInfoEntry info={info} />
+                  <BorderInfoEntry info={{ ...info, borderID: border?.id }} />
                   <Divider />
                 </React.Fragment>
               );

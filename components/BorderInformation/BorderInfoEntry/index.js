@@ -1,6 +1,10 @@
-import { Box, useTheme } from "@material-ui/core";
+import { Box, IconButton, Menu, MenuItem, useTheme } from "@material-ui/core";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import MoreHorizIcon from "@material-ui/icons/MoreHoriz";
+import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteInformation } from "../../../store/infos/actions";
+import { selectDeviceID } from "../../../store/selectors";
 import styles from "./border-info-message.module.scss";
 
 const formatDatetime = (datetime) => {
@@ -15,6 +19,10 @@ const formatWaitingTime = (waitingTime) => {
 
 const BorderInfoEntry = ({ info }) => {
   const theme = useTheme();
+  const [anchorEl, setAnchorEl] = useState(null);
+  const open = !!anchorEl;
+  const deviceID = useSelector(selectDeviceID);
+  const dispatch = useDispatch();
 
   const colorLeftBorderBasedOnWaitingTime = (waitingTime) => {
     const [hours, minutes] = waitingTime.split(":");
@@ -43,7 +51,23 @@ const BorderInfoEntry = ({ info }) => {
               {formatDatetime(info.datetime)}
             </Box>
           </div>
-          <MoreHorizIcon color="primary" />
+          <IconButton
+            onClick={(e) => setAnchorEl(e.currentTarget)}
+            size="small"
+            aria-label="more"
+            aria-controls="long-menu"
+            aria-haspopup="true">
+            <MoreHorizIcon color="primary" />
+          </IconButton>
+          <Menu id="long-menu" anchorEl={anchorEl} keepMounted open={open} onClose={() => setAnchorEl(null)}>
+            {deviceID === info.deviceID ? (
+              <MenuItem onClick={() => dispatch(deleteInformation({ borderID: info.borderID, infoID: info.id }))} selected>
+                Törlés
+              </MenuItem>
+            ) : (
+              <MenuItem selected>Jelentés</MenuItem>
+            )}
+          </Menu>
         </div>
 
         <div className={styles.contentWatingTime}>
