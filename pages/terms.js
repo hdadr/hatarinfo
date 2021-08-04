@@ -10,7 +10,7 @@ const Terms = () => {
         Az alkalmazás sütiket használhat, hogy a funkcióját eltudja látni. Ezek a sütik az alkalmazás működéséhez kellenek, amik nem
         hordoznak személyes adatot. Az alkalmazás használatával beleegyezik, ezen sütik használatához.
       </p>
-      <p>Törvénybe ütköző információk megosztása tilos és rendőrségi feljelentést vonhat maga után!</p>
+      <p>Törvénybe ütköző tartalom megosztása tilos és rendőrségi feljelentést vonhat maga után!</p>
       <p>Ha bárminemű problémát észlel, akkor a visszajelzés oldalon jelentheti azt.</p>
       <p>
         Ha a felhasználók által megadott határinfó nem odaillő, akkor azt jelenthei az információnál található három pont-ra (...)
