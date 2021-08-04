@@ -1,10 +1,30 @@
-import { Button, FormControl, InputLabel, MenuItem, Select, TextField } from "@material-ui/core";
-import { useState } from "react";
+import { Button, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField } from "@material-ui/core";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { sendFeedback } from "../store/feedback/actions";
 import styles from "../styles/feedback.module.scss";
+import { selectFeedbackStatus } from "../store/selectors";
+import { Alert } from "@material-ui/lab";
 
 const Feedback = () => {
   const [subject, setSubject] = useState("");
   const [message, setMessage] = useState("");
+  const [showSnackbar, setShowSnackbar] = useState(false);
+  const dispatch = useDispatch();
+  const status = useSelector(selectFeedbackStatus);
+
+  useEffect(() => {
+    if (status === "sent") {
+      setShowSnackbar(true);
+      setSubject("");
+      setMessage("");
+    }
+  }, [status]);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    dispatch(sendFeedback({ subject, message }));
+  };
 
   return (
     <>
@@ -12,7 +32,7 @@ const Feedback = () => {
         <h1>Visszajelzés</h1>
       </div>
 
-      <form className={styles.form} noValidate>
+      <form onSubmit={handleSubmit} className={styles.form} noValidate>
         <div className={styles.subject}>
           <FormControl className={styles.fullWidth} variant="outlined">
             <InputLabel id="subject">Tárgy *</InputLabel>
@@ -38,11 +58,15 @@ const Feedback = () => {
         </div>
 
         <div>
-          <Button disabled={message.length < 3 || subject === ""} type="submit" variant="contained" color="primary">
+          <Button disabled={status === "sending" || message.length < 3 || subject === ""} type="submit" variant="contained" color="primary">
             Küldés
           </Button>
         </div>
       </form>
+
+      <Snackbar open={showSnackbar} autoHideDuration={3200} onClose={() => setShowSnackbar(false)}>
+        <Alert severity="success">Sikeresen elküldve!</Alert>
+      </Snackbar>
     </>
   );
 };
