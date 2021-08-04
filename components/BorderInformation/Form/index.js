@@ -78,7 +78,7 @@ const Form = ({ closeDialog, borderID }) => {
           Mégse
         </Button>
 
-        <Button disabled={loading} type="submit" variant="contained" color="primary">
+        <Button disabled={loading || waitingTimeError} type="submit" variant="contained" color="primary">
           Küldés
         </Button>
       </div>
