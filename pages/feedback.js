@@ -57,7 +57,7 @@ const Feedback = () => {
           />
         </div>
 
-        <div>
+        <div className={styles.button}>
           <Button disabled={status === "sending" || message.length < 3 || subject === ""} type="submit" variant="contained" color="primary">
             Küldés
           </Button>
