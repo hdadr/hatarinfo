@@ -1,8 +1,9 @@
-import { Drawer, IconButton, Link } from "@material-ui/core";
+import { Drawer, IconButton, Link as StyledLink } from "@material-ui/core";
 import GavelIcon from "@material-ui/icons/GavelRounded";
 import FeedbackIcon from "@material-ui/icons/FeedbackTwoTone";
 import CloseIcon from "@material-ui/icons/Close";
 import styles from "./sidebar.module.scss";
+import Link from "next/link";
 
 const Sidebar = ({ open, close }) => {
   return (
@@ -16,19 +17,23 @@ const Sidebar = ({ open, close }) => {
 
         <div className={styles.links}>
           <div>
-            <Link>
-              <div className={styles.link}>
-                <FeedbackIcon />
-                <span>Visszajelzés</span>
-              </div>
+            <Link href="/feedback" passHref>
+              <StyledLink onClick={close}>
+                <div className={styles.link}>
+                  <FeedbackIcon />
+                  <span>Visszajelzés</span>
+                </div>
+              </StyledLink>
             </Link>
           </div>
           <div>
-            <Link>
-              <div className={styles.link}>
-                <GavelIcon />
-                <span>Szabályzat</span>
-              </div>
+            <Link href="/" passHref>
+              <StyledLink>
+                <div className={styles.link}>
+                  <GavelIcon />
+                  <span>Szabályzat</span>
+                </div>
+              </StyledLink>
             </Link>
           </div>
         </div>
