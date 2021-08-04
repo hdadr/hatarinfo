@@ -8,16 +8,15 @@ import AddIcon from "@material-ui/icons/Add";
 import Form from "./Form";
 import { useDispatch, useSelector } from "react-redux";
 import { loadInformations } from "../../store/infos/actions";
-import { selectBorderInformationEntires, selectDeviceID } from "../../store/selectors";
+import { selectDeviceID, selectEntrieswithoutUserReported } from "../../store/selectors";
 
 const sortByDatetimeDesc = (i1, i2) => i2.datetime - i1.datetime;
-const filterOutCurrentUserReportedInfos = (deviceID) => (info) => !info.report.reporters.includes(deviceID);
 
 const BorderInformation = ({ close, border }) => {
   const dispatch = useDispatch();
-  const infoEntries = useSelector(selectBorderInformationEntires);
-  const [openAddInfo, setOpenAddInfo] = useState(false);
   const deviceID = useSelector(selectDeviceID);
+  const infoEntries = useSelector(selectEntrieswithoutUserReported(deviceID)).sort(sortByDatetimeDesc);
+  const [openAddInfo, setOpenAddInfo] = useState(false);
 
   const handleCloseDialog = () => {
     setOpenAddInfo(false);
@@ -37,17 +36,14 @@ const BorderInformation = ({ close, border }) => {
       <Paper elevation={1}>
         <div className={styles.infoContainer}>
           {infoEntries.length ? (
-            infoEntries
-              .filter(filterOutCurrentUserReportedInfos(deviceID))
-              .sort(sortByDatetimeDesc)
-              .map((info, index) => {
-                return (
-                  <React.Fragment key={info.datetime + index}>
-                    <BorderInfoEntry info={{ ...info, borderID: border?.id }} />
-                    <Divider />
-                  </React.Fragment>
-                );
-              })
+            infoEntries.map((info, index) => {
+              return (
+                <React.Fragment key={info.datetime + index}>
+                  <BorderInfoEntry info={{ ...info, borderID: border?.id }} />
+                  <Divider />
+                </React.Fragment>
+              );
+            })
           ) : (
             <div>Az elmúlt 6 órában nem érkezett visszajelzés.</div>
           )}
