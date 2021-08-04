@@ -27,8 +27,8 @@ const Sidebar = ({ open, close }) => {
             </Link>
           </div>
           <div>
-            <Link href="/" passHref>
-              <StyledLink>
+            <Link href="/terms" passHref>
+              <StyledLink onClick={close}>
                 <div className={styles.link}>
                   <GavelIcon />
                   <span>Szabályzat</span>
