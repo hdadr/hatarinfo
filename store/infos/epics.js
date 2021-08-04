@@ -26,7 +26,7 @@ export const addNewInfoEpic = (action$) =>
     )
   );
 
-const sixHoursInMillisecs = 6 * 10 * 60 * 1000;
+const sixHoursInMillisecs = 6 * 60 * 60 * 1000;
 export const loadInfosEpic = (action$) =>
   action$.pipe(
     ofType(LOAD_INFORMATIONS),
