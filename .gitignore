@@ -34,3 +34,7 @@ yarn-error.log*
 .vercel
 
 firebase/config.js
+
+sw.js
+sw.js.map
+workbox*
