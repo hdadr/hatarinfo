@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import CountrySelector from "../components/CountrySelector";
 import styles from "../styles/home.module.scss";
 import BorderList from "../components/BorderList";
-import { borders } from "../public/borders";
+import { borders } from "../store/border/borders";
 import { Dialog, Paper } from "@material-ui/core";
 import BorderInformation from "../components/BorderInformation";
 import SlideUpTransition from "../components/SlideUpTransition";
