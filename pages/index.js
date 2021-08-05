@@ -11,6 +11,7 @@ import { useLocalStorage } from "../hooks/useLocalStorage";
 import { nanoid } from "nanoid";
 import { setDeviceID } from "../store/device/actions";
 import { unsetInformation } from "../store/infos/actions";
+import Head from "next/head";
 
 export default function Home() {
   const state = useSelector((state) => state);
@@ -34,6 +35,9 @@ export default function Home() {
 
   return (
     <>
+      <Head>
+        <title>Határinfó</title>
+      </Head>
       <div className={styles.container}>
         <h2>Válasz országot</h2>
         <Paper elevation={1}>
