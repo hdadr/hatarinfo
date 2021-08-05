@@ -1,23 +1,20 @@
-import { Button } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import TextField from "@material-ui/core/TextField";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addNewInfo } from "../../../store/infos/actions";
 import { selectDeviceID, selectInfoLoading } from "../../../store/selectors";
+import AutoCompleteInput from "../../AutoCompleteInput";
 import styles from "./border-information-form.module.scss";
 
 const Form = ({ closeDialog, borderID }) => {
   const [comment, setComment] = useState("");
-  const [waitingTime, setWaitingTime] = useState("00:30");
+  const [hours, setHours] = useState(hourOptions[0]);
+  const [minutes, setMinutes] = useState(minuteOptions[29]);
   const deviceID = useSelector(selectDeviceID);
-
-  const [waitingTimeError, setWaitingTimeError] = useState(false);
-  const handleWaitingTimeErrorState = () => {
-    return waitingTime ? setWaitingTimeError(false) : setWaitingTimeError(true);
-  };
-
-  const [submitted, setSubmitted] = useState("");
+  const [submitted, setSubmitted] = useState(false);
   const loading = useSelector(selectInfoLoading);
+
   useEffect(() => {
     submitted & !loading ? closeDialog() : null;
   }, [submitted, loading, closeDialog]);
@@ -32,7 +29,7 @@ const Form = ({ closeDialog, borderID }) => {
         borderID,
         data: {
           deviceID,
-          waitingTime,
+          waitingTime: `${hours.value}:${minutes.value}`,
           comment,
           datetime: Date.now(),
           report: {
@@ -45,22 +42,18 @@ const Form = ({ closeDialog, borderID }) => {
     );
   };
 
+  const handleHoursSelection = (value) => setHours(value);
+  const handleMinutesSelection = (value) => setMinutes(value);
+
   return (
     <form onSubmit={handeSubmit} className={styles.form} noValidate>
-      <TextField
-        error={waitingTimeError}
-        name="waitingTime"
-        value={waitingTime}
-        onChange={(e) => setWaitingTime(e.target.value)}
-        onBlur={handleWaitingTimeErrorState}
-        className={styles.fullWidth}
-        label="Várakozási idő (óra:perc)"
-        type="time"
-        variant="outlined"
-        InputLabelProps={{
-          shrink: true,
-        }}
-      />
+      <Typography variant="body1" color="textSecondary">
+        Várakozási idő
+      </Typography>
+      <div className={styles.waitingTime}>
+        <AutoCompleteInput value={hours} options={hourOptions} label="Óra" onSelect={handleHoursSelection} />
+        <AutoCompleteInput value={minutes} options={minuteOptions} label="Perc" onSelect={handleMinutesSelection} />
+      </div>
 
       <TextField
         value={comment}
@@ -78,7 +71,7 @@ const Form = ({ closeDialog, borderID }) => {
           Mégse
         </Button>
 
-        <Button disabled={loading || waitingTimeError} type="submit" variant="contained" color="primary">
+        <Button disabled={loading} type="submit" variant="contained" color="primary">
           Küldés
         </Button>
       </div>
@@ -87,3 +80,20 @@ const Form = ({ closeDialog, borderID }) => {
 };
 
 export default Form;
+
+const hourOptions = [
+  { label: "0", value: "00" },
+  { label: "1", value: "01" },
+  { label: "2", value: "02" },
+  { label: "3", value: "03" },
+  { label: "4", value: "04" },
+  { label: "5", value: "05" },
+  { label: "6", value: "06" },
+  { label: "7", value: "07" },
+  { label: "8", value: "08" },
+];
+
+const minuteOptions = new Array(59).fill(1).map((element, index) => {
+  const min = `${element + index}`;
+  return min.length < 2 ? { label: min, value: `0${min}` } : { label: min, value: min };
+});
