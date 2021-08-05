@@ -14,7 +14,7 @@ const Terms = () => {
       <p>Ha bárminemű problémát észlel, akkor a visszajelzés oldalon jelentheti azt.</p>
       <p>
         Ha a felhasználók által megadott határinfó nem odaillő, akkor azt jelenthei az információnál található három pont-ra (...)
-        kattintva, az ott lenyiló jelentés pontban. Ezzel segítheti, hogy a nem odaillő tartalom más felhasználót ne zavarhasson.
+        kattintva, az ott lenyiló jelentésnél. Ezzel segítheti, hogy a kéretlen tartalom más felhasználót ne zavarhasson.
       </p>
       <p>
         Az alkalmazás készítője semmiféle felelőséget nem vállal az alkalmazás használatából eredő vagy helytelen információk okozta
