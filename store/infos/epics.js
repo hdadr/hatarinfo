@@ -26,15 +26,15 @@ export const addNewInfoEpic = (action$) =>
     )
   );
 
-const sixHoursInMillisecs = 6 * 60 * 60 * 1000;
+const eightHoursInMillisecs = 8 * 60 * 60 * 1000;
 export const loadInfosEpic = (action$) =>
   action$.pipe(
     ofType(LOAD_INFORMATIONS),
     switchMap((action) => {
-      const notOlderThanSixHours = where("datetime", ">=", Date.now() - sixHoursInMillisecs);
+      const notOlderThanEightHours = where("datetime", ">=", Date.now() - eightHoursInMillisecs);
       const onlyWithActiveStatus = where("status", "==", "active");
 
-      return getDocuments(`borders/${action.payload.borderID}/infos`, [notOlderThanSixHours, onlyWithActiveStatus]).pipe(
+      return getDocuments(`borders/${action.payload.borderID}/infos`, [notOlderThanEightHours, onlyWithActiveStatus]).pipe(
         map((snapshot) => snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.ref.id }))),
         map((entries) => loadInformationsFullFilled(entries)),
         catchError((error) => {
