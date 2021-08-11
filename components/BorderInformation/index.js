@@ -1,5 +1,5 @@
 import { Dialog, Divider, Fab, Paper } from "@material-ui/core";
-import styles from "./border-info.module.scss";
+import styles from "./border-information.module.scss";
 import React, { useEffect, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import { useDispatch, useSelector } from "react-redux";
