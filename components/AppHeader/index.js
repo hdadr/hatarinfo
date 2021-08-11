@@ -16,7 +16,7 @@ const AppHeader = () => {
 
   return (
     <>
-      <AppBar position="static" className={styles.appBar}>
+      <AppBar position="static">
         <div className={styles.container} style={style}>
           {router.asPath === "/" ? null : (
             <IconButton edge="start" color="inherit" aria-label="home">
