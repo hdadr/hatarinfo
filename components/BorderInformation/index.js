@@ -45,7 +45,7 @@ const BorderInformation = ({ close, border }) => {
               );
             })
           ) : (
-            <div>Az elmúlt 6 órában nem érkezett visszajelzés.</div>
+            <div>Az elmúlt 8 órában nem érkezett visszajelzés.</div>
           )}
         </div>
       </Paper>
