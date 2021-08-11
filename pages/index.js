@@ -54,6 +54,7 @@ export default function Home() {
         </Paper>
       </div>
 
+      {/* Using dialog cos of the transition animation */}
       <Dialog fullScreen open={openBorderInformation} TransitionComponent={SlideUpTransition}>
         <BorderInformation border={selectedBorder} close={handleCloseBorderInformation} />
       </Dialog>
