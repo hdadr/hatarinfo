@@ -1,14 +1,14 @@
 import { Dialog, Divider, Fab, Paper } from "@material-ui/core";
 import styles from "./border-info.module.scss";
-import Description from "./Description";
-import BorderInfoEntry from "./BorderInfoEntry";
-import Header from "./Header";
 import React, { useEffect, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
-import Form from "./Form";
 import { useDispatch, useSelector } from "react-redux";
 import { loadInformations } from "../../store/infos/actions";
 import { selectDeviceID, selectEntrieswithoutUserReported } from "../../store/selectors";
+import Header from "./Header";
+import Description from "./Description";
+import Entry from "./Entry";
+import Form from "./Form";
 
 const sortByDatetimeDesc = (i1, i2) => i2.datetime - i1.datetime;
 
@@ -39,7 +39,7 @@ const BorderInformation = ({ close, border }) => {
             infoEntries.map((info, index) => {
               return (
                 <React.Fragment key={info.datetime + index}>
-                  <BorderInfoEntry info={{ ...info, borderID: border?.id }} />
+                  <Entry info={{ ...info, borderID: border?.id }} />
                   <Divider />
                 </React.Fragment>
               );

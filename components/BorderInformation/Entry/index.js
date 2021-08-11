@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteInformation, reportInformation } from "../../../store/infos/actions";
 import { selectDeviceID } from "../../../store/selectors";
-import styles from "./border-info-message.module.scss";
+import styles from "./entry.module.scss";
 
 const formatDatetime = (datetime) => {
   const date = new Date(datetime);
@@ -17,7 +17,7 @@ const formatWaitingTime = (waitingTime) => {
   return hours === "0" ? `${minutes} perc` : `${hours} óra ${minutes} perc`;
 };
 
-const BorderInfoEntry = ({ info }) => {
+const Entry = ({ info }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [growTransition, setGrowTransition] = useState(true);
@@ -99,4 +99,4 @@ const BorderInfoEntry = ({ info }) => {
   );
 };
 
-export default BorderInfoEntry;
+export default Entry;
