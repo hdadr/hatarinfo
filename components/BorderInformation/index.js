@@ -1,8 +1,8 @@
 import { Dialog, Divider, Fab, Paper } from "@material-ui/core";
 import styles from "./border-info.module.scss";
-import BorderDescription from "./BorderDescription";
+import Description from "./Description";
 import BorderInfoEntry from "./BorderInfoEntry";
-import BorderInfoHeaderBar from "./BorderInfoHeaderBar";
+import Header from "./Header";
 import React, { useEffect, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import Form from "./Form";
@@ -28,10 +28,10 @@ const BorderInformation = ({ close, border }) => {
 
   return (
     <div className={styles.container}>
-      <BorderInfoHeaderBar close={close} />
+      <Header closeBorderInformation={close} />
       <Divider />
 
-      <BorderDescription border={border} />
+      <Description border={border} />
 
       <Paper elevation={1}>
         <div className={styles.infoContainer}>
