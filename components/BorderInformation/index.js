@@ -1,4 +1,4 @@
-import { Dialog, Divider, Fab, Paper } from "@material-ui/core";
+import { Dialog, Divider, Fab, Paper, useMediaQuery } from "@material-ui/core";
 import styles from "./border-information.module.scss";
 import React, { useEffect, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
@@ -17,6 +17,7 @@ const BorderInformation = ({ close, border }) => {
   const deviceID = useSelector(selectDeviceID);
   const infoEntries = useSelector(selectEntrieswithoutUserReported(deviceID)).sort(sortByDatetimeDesc);
   const [openAddInfo, setOpenAddInfo] = useState(false);
+  const wideScreen = useMediaQuery("(min-width:600px)");
 
   const handleCloseDialog = () => {
     setOpenAddInfo(false);
@@ -27,7 +28,7 @@ const BorderInformation = ({ close, border }) => {
   }, [dispatch, border]);
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} style={wideScreen ? { width: "70vh" } : null}>
       <Header closeBorderInformation={close} />
       <Divider />
 
