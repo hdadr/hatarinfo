@@ -41,17 +41,17 @@ export default function Home() {
       </Head>
       <div className={styles.container}>
         <div className={styles.countrySelectorContainer}>
-          <Typography variant="h4">
-            <span className={styles.countrySelectorTitle}>Válasz országot</span>
+          <Typography variant="h4" style={{ color: "white" }}>
+            Válasz országot
           </Typography>
           <CountrySelector countries={state.countries} from={selectedCountries.from} to={selectedCountries.to} />
         </div>
       </div>
 
       <div className={styles.borderContainer}>
-        <h3>Válasz határt</h3>
+        <Typography variant="h6">Válasz határt</Typography>
         <Paper elevation={1}>
-          <div className={styles.borderListContainer}>
+          <div className={styles.borderList}>
             <BorderList borders={filteredBorders} openBorderInformation={() => setOpenBorderInformation(true)} />
           </div>
         </Paper>
