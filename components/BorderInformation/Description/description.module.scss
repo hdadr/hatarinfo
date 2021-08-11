@@ -18,6 +18,10 @@
   }
 }
 
+.icon {
+  cursor: pointer;
+}
+
 // Animation
 .icon[rotate="1"] {
   animation: rotate 220ms 1 cubic-bezier(0.11, 0, 0.5, 0);
