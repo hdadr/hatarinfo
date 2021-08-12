@@ -59,11 +59,9 @@ const Description = ({ border }) => {
         <div>
           <Box color="text.secondary">Hivatalos infó:</Box>
           <Link
-            href={
-              border?.link
-                ? info.link
-                : "http://www.police.hu/hu/hirek-es-informaciok/hatarinfo?field_hat_rszakasz_value=szerb+hat%C3%A1rszakasz"
-            }>
+            href="http://www.police.hu/hu/hirek-es-informaciok/hatarinfo?field_hat_rszakasz_value=szerb+hat%C3%A1rszakasz"
+            target="_blank"
+            rel="noopener noreferrer">
             Weboldal
           </Link>
         </div>
