@@ -1,19 +1,26 @@
 import { useState } from "react";
-import { Box, Link, Paper } from "@material-ui/core";
-import styles from "./border-description.module.scss";
+import { Box, Grow, Link, Paper } from "@material-ui/core";
+import styles from "./description.module.scss";
 import SwapHorizRoundedIcon from "@material-ui/icons/SwapHorizRounded";
 import { useDispatch } from "react-redux";
 import { swapSelectedBorder } from "../../../store/border/actions";
 
-const BorderDescription = ({ border }) => {
+const Description = ({ border }) => {
   const dispatch = useDispatch();
   const [rotate, setRotate] = useState(0);
+  const [grow, setGrow] = useState(true);
 
   const handleBorderSwap = (border) => {
+    setGrow(false);
     setRotate(1);
     const [departure, arrival] = border.name.split("-");
     const swappedBorderName = `${arrival.trimLeft()} - ${departure.trimRight()}`;
     dispatch(swapSelectedBorder(swappedBorderName));
+  };
+
+  const handleAnimationEnd = () => {
+    setGrow(true);
+    setRotate(0);
   };
 
   const formatBorderName = (border) => {
@@ -21,15 +28,19 @@ const BorderDescription = ({ border }) => {
 
     return (
       <div className={styles.borderName}>
-        <span>{departure}</span>
+        <Grow in={grow} {...{ timeout: 50 }}>
+          <span>{departure}</span>
+        </Grow>
         <SwapHorizRoundedIcon
           className={styles.icon}
           rotate={rotate}
-          onAnimationEnd={() => setRotate(0)}
+          onAnimationEnd={handleAnimationEnd}
           onClick={() => handleBorderSwap(border)}
           color="primary"
         />
-        <span>{arrival}</span>
+        <Grow in={grow} {...{ timeout: 50 }}>
+          <span>{arrival}</span>
+        </Grow>
       </div>
     );
   };
@@ -48,11 +59,9 @@ const BorderDescription = ({ border }) => {
         <div>
           <Box color="text.secondary">Hivatalos infó:</Box>
           <Link
-            href={
-              border?.link
-                ? info.link
-                : "http://www.police.hu/hu/hirek-es-informaciok/hatarinfo?field_hat_rszakasz_value=szerb+hat%C3%A1rszakasz"
-            }>
+            href="http://www.police.hu/hu/hirek-es-informaciok/hatarinfo?field_hat_rszakasz_value=szerb+hat%C3%A1rszakasz"
+            target="_blank"
+            rel="noopener noreferrer">
             Weboldal
           </Link>
         </div>
@@ -61,4 +70,4 @@ const BorderDescription = ({ border }) => {
   );
 };
 
-export default BorderDescription;
+export default Description;

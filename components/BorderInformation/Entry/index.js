@@ -5,7 +5,8 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { deleteInformation, reportInformation } from "../../../store/infos/actions";
 import { selectDeviceID } from "../../../store/selectors";
-import styles from "./border-info-message.module.scss";
+import ActionMenu from "./ActionMenu";
+import styles from "./entry.module.scss";
 
 const formatDatetime = (datetime) => {
   const date = new Date(datetime);
@@ -17,7 +18,7 @@ const formatWaitingTime = (waitingTime) => {
   return hours === "0" ? `${minutes} perc` : `${hours} óra ${minutes} perc`;
 };
 
-const BorderInfoEntry = ({ info }) => {
+const Entry = ({ info }) => {
   const theme = useTheme();
   const [anchorEl, setAnchorEl] = useState(null);
   const [growTransition, setGrowTransition] = useState(true);
@@ -57,6 +58,7 @@ const BorderInfoEntry = ({ info }) => {
                 {formatDatetime(info.datetime)}
               </Box>
             </div>
+
             <IconButton
               onClick={(e) => setAnchorEl(e.currentTarget)}
               size="small"
@@ -65,19 +67,14 @@ const BorderInfoEntry = ({ info }) => {
               aria-haspopup="true">
               <MoreHorizIcon color="primary" />
             </IconButton>
-            <Menu id="long-menu" anchorEl={anchorEl} keepMounted open={open} onClose={() => setAnchorEl(null)}>
-              {currentUserDeviceID === info.deviceID ? (
-                <MenuItem onClick={() => dispatch(deleteInformation({ borderID: info.borderID, infoID: info.id }))} selected>
-                  Törlés
-                </MenuItem>
-              ) : (
-                <MenuItem
-                  onClick={() => dispatch(reportInformation({ borderID: info.borderID, info: info, deviceID: currentUserDeviceID }))}
-                  selected>
-                  Jelentés
-                </MenuItem>
-              )}
-            </Menu>
+            <ActionMenu
+              author={currentUserDeviceID === info.deviceID}
+              report={() => dispatch(reportInformation({ borderID: info.borderID, info: info, deviceID: currentUserDeviceID }))}
+              deletion={() => dispatch(deleteInformation({ borderID: info.borderID, infoID: info.id }))}
+              close={() => setAnchorEl(null)}
+              open={open}
+              anchorEl={anchorEl}
+            />
           </div>
 
           <div className={styles.contentWatingTime}>
@@ -99,4 +96,4 @@ const BorderInfoEntry = ({ info }) => {
   );
 };
 
-export default BorderInfoEntry;
+export default Entry;

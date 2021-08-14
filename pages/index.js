@@ -4,7 +4,7 @@ import CountrySelector from "../components/CountrySelector";
 import styles from "../styles/home.module.scss";
 import BorderList from "../components/BorderList";
 import { borders } from "../store/border/borders";
-import { Dialog, Paper } from "@material-ui/core";
+import { Dialog, Paper, Typography, useMediaQuery } from "@material-ui/core";
 import BorderInformation from "../components/BorderInformation";
 import SlideUpTransition from "../components/SlideUpTransition";
 import { useLocalStorage } from "../hooks/useLocalStorage";
@@ -18,6 +18,7 @@ export default function Home() {
   const { selectedCountries, selectedBorder } = state;
   const countryBorderDirection = `${selectedCountries.from.code}-${selectedCountries.to.code}`;
   const filteredBorders = borders.filter((border) => border.id.includes(countryBorderDirection));
+  const fullScreen = useMediaQuery("(max-width:600px)");
 
   const [openBorderInformation, setOpenBorderInformation] = useState(false);
 
@@ -39,22 +40,31 @@ export default function Home() {
         <title>Határinfó</title>
       </Head>
       <div className={styles.container}>
-        <h2>Válasz országot</h2>
-        <Paper elevation={1}>
-          <div className={styles.countrySelectorContainer}>
-            <CountrySelector countries={state.countries} from={selectedCountries.from} to={selectedCountries.to} />
-          </div>
-        </Paper>
+        <div className={styles.countrySelectorContainer}>
+          <Typography variant="h4" style={{ color: "white" }}>
+            Válasz országot
+          </Typography>
+          <CountrySelector countries={state.countries} from={selectedCountries.from} to={selectedCountries.to} />
+        </div>
+      </div>
 
-        <h3>Válasz határt</h3>
+      <div className={styles.borderContainer}>
+        <Typography variant="h6">Válasz határt</Typography>
         <Paper elevation={1}>
-          <div className={styles.borderListContainer}>
+          <div className={styles.borderList}>
             <BorderList borders={filteredBorders} openBorderInformation={() => setOpenBorderInformation(true)} />
           </div>
         </Paper>
       </div>
 
-      <Dialog fullScreen open={openBorderInformation} TransitionComponent={SlideUpTransition}>
+      {/* Using dialog cos of the transition animation */}
+      <Dialog
+        fullScreen={fullScreen}
+        open={openBorderInformation}
+        onClose={handleCloseBorderInformation}
+        TransitionComponent={SlideUpTransition}
+        scroll="body"
+        disableScrollLock>
         <BorderInformation border={selectedBorder} close={handleCloseBorderInformation} />
       </Dialog>
     </>

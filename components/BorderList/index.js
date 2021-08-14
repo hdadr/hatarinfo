@@ -1,4 +1,4 @@
-import { Box, Divider, List, ListItem } from "@material-ui/core";
+import { Box, Divider, Grow, List, ListItem, Typography } from "@material-ui/core";
 import React from "react";
 import { useDispatch } from "react-redux";
 import { setSelectedBorder } from "../../store/border/actions";
@@ -23,12 +23,19 @@ const BorderList = ({ borders = [], openBorderInformation }) => {
       {borders.map((border) => {
         return (
           <React.Fragment key={border.name}>
-            <ListItem disabled={borderClosed(border.openingHours)} onClick={() => handleBorderListItemClick(border)} button>
-              <div>
-                <div>{border.name}</div>
-                <Box color="text.secondary">{border.openingHours}</Box>
-              </div>
-            </ListItem>
+            <Grow in={true}>
+              <ListItem disabled={borderClosed(border.openingHours)} onClick={() => handleBorderListItemClick(border)} button>
+                <div>
+                  <div>
+                    <Typography display="inline">{border.name.split("-")[0]} </Typography>
+                    <Typography display="inline" color="textSecondary">
+                      -{border.name.split("-")[1]}
+                    </Typography>
+                  </div>
+                  <Box color="text.secondary">{border.openingHours}h</Box>
+                </div>
+              </ListItem>
+            </Grow>
             <Divider />
           </React.Fragment>
         );
