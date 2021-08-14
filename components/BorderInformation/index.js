@@ -1,6 +1,6 @@
 import { Dialog, Divider, Fab, Paper, useMediaQuery } from "@material-ui/core";
 import styles from "./border-information.module.scss";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useRef, useState } from "react";
 import AddIcon from "@material-ui/icons/Add";
 import { useDispatch, useSelector } from "react-redux";
 import { loadInformations } from "../../store/infos/actions";
@@ -27,8 +27,17 @@ const BorderInformation = ({ close, border }) => {
     dispatch(loadInformations({ borderID: border?.id }));
   }, [dispatch, border]);
 
+  const [fabPosition, setFabPosition] = useState();
+  // does not work on screen resize, TODO
+  const measuredRef = useCallback((containerNode) => {
+    if (containerNode !== null) {
+      const { right, y } = containerNode.getClientRects()[0];
+      setFabPosition({ bottom: `${y + 8}px`, left: `${right + 20}px` });
+    }
+  }, []);
+
   return (
-    <div className={styles.container} style={wideScreen ? { width: "70vh" } : null}>
+    <div ref={measuredRef} className={styles.container} style={wideScreen ? { width: "540px", height: "700px" } : null}>
       <Header closeBorderInformation={close} />
       <Divider />
 
@@ -51,7 +60,7 @@ const BorderInformation = ({ close, border }) => {
         </div>
       </Paper>
 
-      <div className={styles.floatingActionButton}>
+      <div className={styles.floatingActionButton} style={wideScreen ? fabPosition : null}>
         <Fab onClick={() => setOpenAddInfo(true)} color="primary" aria-label="add">
           <AddIcon />
         </Fab>
