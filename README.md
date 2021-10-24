@@ -2,4 +2,4 @@
 
 ### It uses React (NextJS), Redux, Redux-Observable and Firebase.
 
-### Available at: [hatarinfo](https://hatarinfo.vercel.app/)
+### Available at: [hatarinfo](https://hatarinfo.netlify.app/)
